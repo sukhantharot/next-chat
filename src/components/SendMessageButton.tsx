@@ -13,11 +13,18 @@ const SendMessage: React.FC<SendMessageProps> = ({ scroll }) => {
     event.preventDefault();
 
     if (message.trim() === '') {
-      alert('Enter valid message');
+      alert('Enter a valid message');
       return;
     }
 
-    const { uid, displayName, photoURL } = auth.currentUser!;
+    const user = auth.currentUser;
+
+    if (!user) {
+      // Handle the case where the user is not authenticated
+      return;
+    }
+
+    const { uid, displayName, photoURL } = user;
 
     await addDoc(collection(db, 'messages'), {
       text: message,

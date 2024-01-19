@@ -7,9 +7,9 @@ import {
   limit,
   DocumentData,
 } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '@/libs/firebase.ts';
 import Message from './Message';
-import SendMessage from './SendMessage';
+import SendMessageButton from "@/components/SendMessageButton.tsx";
 
 interface MessageItem {
   id: string;
@@ -20,9 +20,15 @@ interface MessageItem {
   uid: string;
 }
 
+interface SendMessageProps {
+  scroll: React.RefObject<HTMLSpanElement>;
+  // Update the type to match your actual ref type
+  // scroll: React.RefObject<HTMLDivElement>;
+}
+
 const ChatBox: React.FC = () => {
   const [messages, setMessages] = useState<MessageItem[]>([]);
-  const scroll = useRef<HTMLSpanElement>(null);
+  const scroll = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const q = query(
@@ -54,7 +60,7 @@ const ChatBox: React.FC = () => {
       </div>
       {/* when a new message enters the chat, the screen scrolls down to the scroll div */}
       <span ref={scroll}></span>
-      <SendMessage scroll={scroll} />
+      <SendMessageButton scroll={scroll} />
     </main>
   );
 };
