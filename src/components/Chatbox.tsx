@@ -20,15 +20,9 @@ interface MessageItem {
   uid: string;
 }
 
-interface SendMessageProps {
-  scroll: React.RefObject<HTMLSpanElement>;
-  // Update the type to match your actual ref type
-  // scroll: React.RefObject<HTMLDivElement>;
-}
-
 const ChatBox: React.FC = () => {
   const [messages, setMessages] = useState<MessageItem[]>([]);
-  const scroll = useRef<HTMLDivElement>(null);
+  const scroll = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const q = query(

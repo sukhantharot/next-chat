@@ -3,7 +3,7 @@ import { auth, db } from '@/libs/firebase.ts';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
 interface SendMessageProps {
-  scroll: React.RefObject<HTMLDivElement>;
+  scroll: React.RefObject<HTMLSpanElement>;
 }
 
 const SendMessage: React.FC<SendMessageProps> = ({ scroll }) => {
