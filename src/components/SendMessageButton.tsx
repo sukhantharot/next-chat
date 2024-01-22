@@ -26,7 +26,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ scroll }) => {
 
     const { uid, displayName, photoURL } = user;
 
-    await addDoc(collection(db, 'messages'), {
+    await addDoc(collection(db, user.uid ?? 'messages'), {
       text: message,
       name: displayName,
       avatar: photoURL,

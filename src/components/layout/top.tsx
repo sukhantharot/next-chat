@@ -32,11 +32,13 @@ import {useState} from "react";
 import { auth } from "@/libs/firebase.ts";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import {useRouter} from "next/navigation";
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function PrimarySearchAppBar() {
   const theme = useTheme();
   const {color, setColor} = useThemeContext();
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
@@ -78,6 +80,12 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleClick = () => {
+    if (auth.currentUser) {
+      router.push(`/${auth.currentUser.uid}`)
+    }
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -96,6 +104,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleClick}>Chat</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={signOut}>Logout</MenuItem>
     </Menu>

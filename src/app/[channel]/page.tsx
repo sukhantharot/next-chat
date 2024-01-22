@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useRef, useState } from 'react';
 import {
   query,
@@ -8,8 +9,8 @@ import {
   DocumentData,
 } from 'firebase/firestore';
 import {auth, db} from '@/libs/firebase.ts';
-import Message from './Message';
 import SendMessageButton from "@/components/SendMessageButton.tsx";
+import Message from '../../components/Message.tsx'
 
 interface MessageItem {
   id: string;
@@ -20,14 +21,14 @@ interface MessageItem {
   uid: string;
 }
 
-const ChatBox: React.FC = () => {
+export default function ChannelPage({ params }: { params: { channel: string } }) {
   const [messages, setMessages] = useState<MessageItem[]>([]);
   const scroll = useRef<HTMLSpanElement>(null);
   const user = auth.currentUser;
 
   useEffect(() => {
     const q = query(
-      collection(db, user?.uid ?? 'messages'),
+      collection(db, params.channel),
       orderBy('createdAt', 'desc'),
       limit(50)
     );
@@ -59,5 +60,3 @@ const ChatBox: React.FC = () => {
     </main>
   );
 };
-
-export default ChatBox;
